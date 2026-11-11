@@ -1,4 +1,5 @@
 import { useState } from "react";
+// import axios from "axios";
 import InputItem from "./InputItem";
 const name = [
   "Tampak Kanan",
@@ -7,9 +8,16 @@ const name = [
   "Tampak Bawah",
   "Tampak Depan",
 ];
+
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function InputContainer() {
   const [images, setImages] = useState(Array(5).fill(null));
-
+  // const [analyzedImages, setAnalyzedImages] = useState(Array(5).fill(null));
+  const [isLoading, setIsLoading] = useState(false);
+  // const analyzed = async (images) => {
+  //   const result = await axios.post(`${BACKEND_URL}/analyze`, images);
+  //   return result;
+  // };
   const handleFileChange = (index, file) => {
     const newImages = [...images];
 
@@ -23,9 +31,9 @@ export default function InputContainer() {
     setImages(newImages);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const formData = new FormData();
     let hasFiles = false;
 
@@ -45,6 +53,9 @@ export default function InputContainer() {
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value.name);
     }
+    console.log(formData.entries());
+    // const result = await analyzed(formData);
+    // setAnalyzedImages(result);
   };
 
   return (
@@ -74,8 +85,9 @@ export default function InputContainer() {
         <button
           type="submit"
           className="!bg-[#E22867] text-white font-bold py-2.5 px-6 rounded-lg transition-colors duration-200 shadow-sm cursor-pointer"
+          // onClick={handleAnalyze}
         >
-          Analisis Gambar
+          {isLoading ? "Loading ..." : "Analisis Gambar"}
         </button>
       </div>
     </form>
