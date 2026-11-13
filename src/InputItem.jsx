@@ -62,7 +62,6 @@ function InputItem({ index, image, onFileChange, name, disabled }) {
         type="file"
         accept="image/*"
         className="hidden"
-        capture="environment"
         onChange={handleChange}
         disabled={disabled}
       />
