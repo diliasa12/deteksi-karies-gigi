@@ -8,7 +8,9 @@ function InputItem({ index, image, onFileChange, name, disabled }) {
 
   return (
     <div className="flex flex-col items-center p-5 rounded-2xl shadow-lg bg-white w-full relative overflow-hidden gap-2">
-      <span className="text-sm font-medium text-gray-400">{name}</span>
+      <span className="md:text-xs text-sm font-medium text-gray-400">
+        {name}
+      </span>
 
       {/* Kotak Preview */}
       <div className="group relative w-full aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-white">
