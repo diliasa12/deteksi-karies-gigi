@@ -8,7 +8,7 @@ function InputItem({ index, image, onFileChange, name, disabled }) {
 
   return (
     <div className="flex flex-col items-center p-5 rounded-2xl shadow-lg bg-white w-full relative overflow-hidden gap-2">
-      <span className="sm:text-xs text-sm font-medium text-gray-400">
+      <span className="text-xs md:text-sm font-medium text-gray-400">
         {name}
       </span>
 
