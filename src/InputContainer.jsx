@@ -1,13 +1,15 @@
 import { useState } from "react";
 import InputItem from "./InputItem";
 import { analyzeImages } from "./api";
+import { useContext } from "react";
+import { LocaleContext } from "./context/LocaleContext";
 
 const SIDES = [
-  { label: "Tampak Kanan", field: "kanan" },
-  { label: "Tampak Kiri", field: "kiri" },
-  { label: "Tampak Atas", field: "atas" },
-  { label: "Tampak Bawah", field: "bawah" },
-  { label: "Tampak Depan", field: "depan" },
+  { labelId: "Tampak Kanan", labelEn: "Right Side", field: "kanan" },
+  { labelId: "Tampak Kiri", labelEn: "Left Side", field: "kiri" },
+  { labelId: "Tampak Atas", labelEn: "Upside", field: "atas" },
+  { labelId: "Tampak Bawah", labelEn: "Downside", field: "bawah" },
+  { labelId: "Tampak Depan", labelEn: "Front Side", field: "depan" },
 ];
 
 export default function InputContainer() {
@@ -15,6 +17,7 @@ export default function InputContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const locale = useContext(LocaleContext);
 
   const handleFileChange = (index, file) => {
     setImages((prev) => {
@@ -66,9 +69,9 @@ export default function InputContainer() {
       className="p-6 max-w-4xl mx-auto rounded-xl shadow-sm border border-gray-200"
     >
       <h2 className="text-sm font-extralight italic mb-6 text-gray-400">
-        *Note: Setiap kolom bersifat opsional. Namun, untuk mendapatkan hasil
-        yang lebih baik, kami menyarankan Anda untuk mengisi seluruh kolom yang
-        tersedia
+        {locale === "id"
+          ? "*Note: Setiap kolom bersifat opsional. Namun, untuk mendapatkan hasil yang lebih baik, kami menyarankan Anda untuk mengisi seluruh kolom yang tersedia."
+          : "*Note: Each field is optional. However, for better results, we recommend that you fill in all the available fields."}
       </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -76,7 +79,7 @@ export default function InputContainer() {
           <InputItem
             key={SIDES[index].field}
             index={index}
-            name={SIDES[index].label}
+            name={locale === "id" ? SIDES[index].labelId : SIDES[index].labelEn}
             image={image}
             onFileChange={handleFileChange}
             disabled={isLoading}
@@ -92,7 +95,11 @@ export default function InputContainer() {
           disabled={isLoading}
           className="!bg-[#E22867] text-white font-bold py-2.5 px-6 rounded-lg transition-colors duration-200 shadow-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {isLoading ? "Loading ..." : "Analisis Gambar"}
+          {isLoading
+            ? "Loading ..."
+            : locale === "id"
+              ? "Analisis Gambar"
+              : "Analyze Pictures"}
         </button>
       </div>
 

@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { LocaleContext } from "./context/LocaleContext";
+
 function InputItem({ index, image, onFileChange, name, disabled }) {
+  const locale = useContext(LocaleContext);
   const handleChange = (event) => {
     onFileChange(index, event.target.files[0]);
     event.target.value = ""; // supaya file yang sama bisa dipilih ulang
@@ -46,7 +50,9 @@ function InputItem({ index, image, onFileChange, name, disabled }) {
             )}
           </>
         ) : (
-          <span className="text-xs text-gray-400 text-center px-2">Kosong</span>
+          <span className="text-xs text-gray-400 text-center px-2">
+            {locale === "id" ? "Kosong" : "Empty"}
+          </span>
         )}
       </div>
 
@@ -57,7 +63,13 @@ function InputItem({ index, image, onFileChange, name, disabled }) {
           disabled ? "opacity-60 pointer-events-none" : "cursor-pointer"
         }`}
       >
-        {image?.previewUrl ? "Ganti" : "Upload"}
+        {image?.previewUrl
+          ? locale === "id"
+            ? "Ganti"
+            : "Change"
+          : locale === "id"
+            ? "Unggah"
+            : "Upload"}
       </label>
       <input
         id={`upload-gambar-${index}`}
